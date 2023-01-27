@@ -4,8 +4,12 @@ router.get('/', async (req, res) => {
     res.render('all');
   });
 
-  router.get('/example', async (req, res) => {
-    res.render('two');
+  router.get('/login', async (req, res) => {
+    res.render('login');
+  });
+
+  router.get('/signup', async (req, res) => {
+    res.render('signup');
   });
   
   module.exports = router;

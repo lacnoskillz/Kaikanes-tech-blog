@@ -16,23 +16,21 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    guest_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [8],
       },
-    has_nuts: {
-      type: DataTypes.BOOLEAN,
-    }
+    },
+
+  
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'dish'
+    modelName: 'user'
   }
 );
 
