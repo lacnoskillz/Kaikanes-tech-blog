@@ -12,9 +12,10 @@ router.get('/', async (req, res) => {
     res.render('signup');
   });
 
-  router.get('/dashboard', async (req, res) => {
-    res.render('signup');
+  router.get('/logout', async (req, res) => {
+    res.redirect('/');
   });
+  
 
   
   
