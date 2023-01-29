@@ -1,20 +1,6 @@
 const router = require('express').Router();
 const { Blog, User } = require('../models');
-// router.get('/', async (req, res) => {
-//     res.render('all');
-//   });
 
-  router.get('/login', async (req, res) => {
-    res.render('login');
-  });
-
-  router.get('/signup', async (req, res) => {
-    res.render('signup');
-  });
-
-  router.get('/logout', async (req, res) => {
-    res.redirect('/');
-  });
   
   router.get('/', async (req, res) => {
     try {
@@ -40,5 +26,20 @@ const { Blog, User } = require('../models');
     }
   });
   
-  
+  router.get('/dashboard', async (req, res) => {
+    
+    res.render('login');
+  });
+
+  router.get('/login', async (req, res) => {
+    res.render('login');
+  });
+
+  router.get('/signup', async (req, res) => {
+    res.render('signup');
+  });
+
+  router.get('/logout', async (req, res) => {
+    res.redirect('/');
+  });
   module.exports = router;
