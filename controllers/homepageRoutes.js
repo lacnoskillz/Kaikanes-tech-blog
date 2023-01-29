@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Blog, User, Comment } = require('../models');
 
   
   router.get('/', async (req, res) => {
@@ -25,7 +25,7 @@ const { Blog, User } = require('../models');
       res.status(500).json(err);
     }
   });
-  
+  //need to make it to show user posts when logged in.
   router.get('/dashboard', async (req, res) => {
     
     res.render('login');
