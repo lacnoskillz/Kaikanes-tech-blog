@@ -20,6 +20,12 @@ Blog.init(
         allowNull: false,
        
       },
+      datemade: {
+        type: DataTypes.STRING,
+        allowNull: false,
+       
+      },
+      
       user_id: {
         type: DataTypes.INTEGER,
         references: {
