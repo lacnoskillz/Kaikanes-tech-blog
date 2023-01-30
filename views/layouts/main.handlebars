@@ -19,9 +19,12 @@
        <ul>
   <li><a class="active" href="/">Home</a></li>
   <li><a href="Dashboard">Dashboard</a></li>
-  <li><a href="Login">Login</a></li>
-  <li><a href="signup">Signup</a></li>
+  {{#if loggedIn}}
   <li><a href="Logout">Logout</a></li>
+  {{else}}
+  <li><a href="Login">Login</a></li>
+  {{/if}}
+  <li><a href="signup">Signup</a></li>
 </ul>
       <main>
 
@@ -29,6 +32,9 @@
       </main>
       
   </div>
+   {{#if loggedIn}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
   </body>
 
 </html>
