@@ -18,7 +18,7 @@ const { Blog, User, Comment } = require('../models');
   );
       res.render('all', {
         Blogs,
-        //loggedIn: req.session.loggedIn, add login sesh later
+        loggedIn: req.session.loggedIn,
       });
     } catch (err) {
       console.log(err);
