@@ -8,10 +8,10 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const helpers = require('./utils/helpers');
 // Sets up the Express App
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 const sess = {
   secret: 'Super secret secret',
   cookie: {},
@@ -24,7 +24,7 @@ const sess = {
 app.use(session(sess));
 
 
-const hbs = exphbs.create({});
+const hbs = exphbs.create({ helpers });
 // The following two lines of code are setting Handlebars.js as the default template engine.
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -37,6 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes);
 
 // Starts the server to begin listening
-app.listen(PORT, () => {
-    console.log('Server listening on: http://localhost:' + PORT);
-  });
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening at'+ PORT));
+});

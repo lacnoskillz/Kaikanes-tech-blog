@@ -25,6 +25,23 @@ const { Blog, User, Comment } = require('../models');
       res.status(500).json(err);
     }
   });
+
+  router.get('/blog/:id', async (req, res) => {
+    try {
+      const dbBlogData = await Blog.findByPk(req.params.id);
+  
+      const Blog = dbBlogData.get({ plain: true });
+  
+      res.render('painting', { painting, loggedIn: req.session.loggedIn });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+
+
+
   //need to make it to show user posts when logged in.
   router.get('/dashboard', async (req, res) => {
     
