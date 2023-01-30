@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Blog, User, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
   
   router.get('/', async (req, res) => {
@@ -56,12 +57,28 @@ const { Blog, User, Comment } = require('../models');
   });
 
 
-
+  router.post('/comment', withAuth,async (req, res) => {
+    try {
+      const dbUserData = await Comment.create({
+        content: req.body.content,
+       // user_id: ,
+        //blog_id: ,
+      });
+  
+   
+  
+        res.status(200).json(dbUserData);
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
 
   //need to make it to show user posts when logged in.
-  router.get('/dashboard', async (req, res) => {
+  router.get('/dashboard', withAuth, async (req, res) => {
     
-    res.render('login');
+    res.render('dashboard');
   });
 
   router.get('/login', async (req, res) => {
