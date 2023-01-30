@@ -28,11 +28,26 @@ const { Blog, User, Comment } = require('../models');
 
   router.get('/blog/:id', async (req, res) => {
     try {
-      const dbBlogData = await Blog.findByPk(req.params.id);
+      const dbBlogData = await Blog.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            attributes: [
+              'user_name',
+            ],
+          },
+          {
+            model: Comment,
+            attributes: [
+              'content',
+            ],
+          },
+        ],
+      });
   
-      const Blog = dbBlogData.get({ plain: true });
-  
-      res.render('painting', { painting, loggedIn: req.session.loggedIn });
+      const blog = dbBlogData.get({ plain: true });
+      res.status(200).json(dbBlogData);
+      res.render('blog-details', { blog });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
