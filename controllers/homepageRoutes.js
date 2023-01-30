@@ -40,13 +40,14 @@ const { Blog, User, Comment } = require('../models');
             model: Comment,
             attributes: [
               'content',
+              'user_id',
             ],
           },
         ],
       });
   
       const blog = dbBlogData.get({ plain: true });
-      res.status(200).json(dbBlogData);
+      //res.status(200).json(dbBlogData);
       res.render('blog-details', { blog });
     } catch (err) {
       console.log(err);

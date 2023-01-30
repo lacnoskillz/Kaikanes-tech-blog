@@ -1,9 +1,16 @@
 <div class="card w-75 mb-3">
   <div class="card-body">
-    <h5 class="card-title">{{blogname}}</h5>
-    <p class="card-text">{{content}} </p> <br>
-    <p>Made by {{user.user_name}} on {{datemade}}</p>
-    <a href="#" class="btn btn-primary">Add comment</a>
+    <h5 class="card-title">{{blog.blogname}}</h5>
+    <p class="card-text">{{blog.content}} </p> <br>
+    <p>Made by {{blog.user.user_name}} on {{blog.datemade}}</p>
   </div>
 
 </div>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Add comment" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Submit</button>
+</div>
+<h2>Comment section</h2>
+   {{#each blog.comments as |comment|}}
+    {{> all-comments}}
+    {{/each}}
