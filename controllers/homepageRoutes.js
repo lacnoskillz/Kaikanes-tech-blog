@@ -42,6 +42,11 @@ const withAuth = require('../utils/auth');
             attributes: [
               'content',
               'user_id',
+              'date_created',
+            ], include: [
+              {
+                model: User,
+              }
             ],
           },
         ],
@@ -91,23 +96,23 @@ const withAuth = require('../utils/auth');
     }
   });
 
-  // router.post('/comment', withAuth,async (req, res) => {
-  //   try {
-  //     const dbUserData = await Comment.create({
-  //       content: req.body.content,
-  //      // user_id: ,
-  //       //blog_id: ,
-  //     });
+  router.post('/comment', withAuth, async (req, res) => {
+    try {
+      const dbcommentData = await Comment.create({
+        content: req.body.content,
+        user_id: session.user_id,
+        //blog_id: req.body.blog_id,
+      });
   
    
   
-  //       res.status(200).json(dbUserData);
+        res.status(200).json(dbcommentData);
       
-  //   } catch (err) {
-  //     console.log(err);
-  //     res.status(500).json(err);
-  //   }
-  // });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
 
   //need to make it to show user posts when logged in.
   router.get('/dashboard', withAuth, async (req, res) => {
@@ -119,6 +124,7 @@ const withAuth = require('../utils/auth');
       });
   
       const user = userData.get({ plain: true });
+      
   
       res.render('dashboard', {
         ...user,
