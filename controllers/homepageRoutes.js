@@ -48,32 +48,66 @@ const withAuth = require('../utils/auth');
       });
   
       const blog = dbBlogData.get({ plain: true });
+      console.log(blog);
       //res.status(200).json(dbBlogData);
       res.render('blog-details', { blog });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  });
-
-
-  router.post('/comment', withAuth,async (req, res) => {
-    try {
-      const dbUserData = await Comment.create({
-        content: req.body.content,
-       // user_id: ,
-        //blog_id: ,
-      });
-  
-   
-  
-        res.status(200).json(dbUserData);
       
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
   });
+  
+  router.post('/blog', withAuth, async (req, res) => {
+    try {
+      const newBlog = await Blog.create({
+        ...req.body,
+        user_id: req.session.user_id,
+      });
+  
+      res.status(200).json(newBlog);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+  
+  router.delete('blog/:id', withAuth, async (req, res) => {
+    try {
+      const blogData = await Blog.destroy({
+        where: {
+          id: req.params.id,
+          user_id: req.session.user_id,
+        },
+      });
+  
+      if (!blogData) {
+        res.status(404).json({ message: 'No project found with this id!' });
+        return;
+      }
+  
+      res.status(200).json(blogData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  // router.post('/comment', withAuth,async (req, res) => {
+  //   try {
+  //     const dbUserData = await Comment.create({
+  //       content: req.body.content,
+  //      // user_id: ,
+  //       //blog_id: ,
+  //     });
+  
+   
+  
+  //       res.status(200).json(dbUserData);
+      
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(500).json(err);
+  //   }
+  // });
 
   //need to make it to show user posts when logged in.
   router.get('/dashboard', withAuth, async (req, res) => {
