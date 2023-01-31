@@ -19,7 +19,6 @@ const withAuth = require('../utils/auth');
   );
       res.render('all', {
         Blogs,
-        loggedIn: req.session.loggedIn,
       });
     } catch (err) {
       console.log(err);
@@ -137,6 +136,12 @@ const withAuth = require('../utils/auth');
         console.log(err);
         res.redirect("login");
       });
+  });
+
+  router.get('/dashboard/newblog', withAuth, async (req, res) => {
+    res.render('newblog', {
+      loggedIn: req.session.loggedIn,
+    });
   });
 
   router.get('/login', async (req, res) => {

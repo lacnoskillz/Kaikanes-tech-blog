@@ -57,23 +57,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/comment', async (req, res) => {
-  try {
-    const dbcommentData = await Comment.create({
-      content: req.body.content,
-      // user_id: session.user_id,
-      //blog_id: req.body.blog_id,
-    });
 
- 
-
-      res.status(200).json(dbcommentData);
-    
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
 // Logout
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
