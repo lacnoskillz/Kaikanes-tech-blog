@@ -6,10 +6,14 @@
   </div>
 
 </div>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Add comment" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Submit</button>
+ {{#if loggedIn}}
+  <div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Add comment" aria-label="Recipient's username" aria-describedby="button-addon2" id="commentinput">
+  <button class="btn btn-outline-secondary" type="button" id="submitbtn">Submit</button>
 </div>
+  <script src="/js/comment.js"></script>
+  {{/if}}
+
 <h5>Comment section</h5>
    {{#each blog.comments as |comment|}}
     {{> all-comments}}

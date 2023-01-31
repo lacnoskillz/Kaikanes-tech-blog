@@ -55,7 +55,10 @@ const withAuth = require('../utils/auth');
       const blog = dbBlogData.get({ plain: true });
       console.log(blog);
       //res.status(200).json(dbBlogData);
-      res.render('blog-details', { blog });
+      res.render('blog-details', 
+      { blog,
+        loggedIn: req.session.loggedIn,
+       });
       
     } catch (err) {
       console.log(err);
@@ -96,43 +99,44 @@ const withAuth = require('../utils/auth');
     }
   });
 
-  router.post('/comment', withAuth, async (req, res) => {
-    try {
-      const dbcommentData = await Comment.create({
-        content: req.body.content,
-        user_id: session.user_id,
-        //blog_id: req.body.blog_id,
-      });
+  // router.post('/comment', async (req, res) => {
+  //   try {
+  //     const dbcommentData = await Comment.create({
+  //       content: req.body.content,
+  //       user_id: session.user_id,
+  //       //blog_id: req.body.blog_id,
+  //     });
   
    
   
-        res.status(200).json(dbcommentData);
+  //       res.status(200).json(dbcommentData);
       
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  });
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(500).json(err);
+  //   }
+  // });
 
   //need to make it to show user posts when logged in.
-  router.get('/dashboard', withAuth, async (req, res) => {
-    try {
-      // Find the logged in user based on the session ID
-      const userData = await User.findByPk(req.session.user_id, {
-        attributes: { exclude: ['password'] },
-        include: [{ model: Blog }],
+  //need to make it to show user posts when logged in.
+  router.get('/dashboard', withAuth, (req, res) => {
+    Blog.findAll({
+      where: {
+        user_id: req.session.user_id
+      }
+    })
+      .then(dbPostData => {
+        const blog = dbPostData.map((blog) => blog.get({ plain: true }));
+        
+        res.render("dashboard", {
+          blog,
+          loggedIn: req.session.loggedIn,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.redirect("login");
       });
-  
-      const user = userData.get({ plain: true });
-      
-  
-      res.render('dashboard', {
-        ...user,
-        loggedIn: true
-      });
-    } catch (err) {
-      res.status(500).json(err);
-    }
   });
 
   router.get('/login', async (req, res) => {
