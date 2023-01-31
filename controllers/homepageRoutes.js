@@ -71,7 +71,7 @@ const withAuth = require('../utils/auth');
     }
   });
   
-  router.delete('blog/:id', withAuth, async (req, res) => {
+  router.delete('/blog/:id', async (req, res) => {
     try {
       const blogData = await Blog.destroy({
         where: {
@@ -111,8 +111,22 @@ const withAuth = require('../utils/auth');
 
   //need to make it to show user posts when logged in.
   router.get('/dashboard', withAuth, async (req, res) => {
-    
-    res.render('dashboard');
+    try {
+      // Find the logged in user based on the session ID
+      const userData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ['password'] },
+        include: [{ model: Blog }],
+      });
+  
+      const user = userData.get({ plain: true });
+  
+      res.render('dashboard', {
+        ...user,
+        loggedIn: true
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
 
   router.get('/login', async (req, res) => {
