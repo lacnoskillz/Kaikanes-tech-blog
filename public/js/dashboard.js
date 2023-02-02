@@ -1,5 +1,5 @@
-
-
+//handlers for deleteing and updating blogs on dashboard
+//delete blog handler
 const delButtonHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
       const id = event.target.getAttribute('data-id');
@@ -16,6 +16,7 @@ const delButtonHandler = async (event) => {
     }
     
   };
+  //update blog handler
   const upblog = async (event) => {
     console.log("here")
     if (event.target.hasAttribute('data-id2')) {

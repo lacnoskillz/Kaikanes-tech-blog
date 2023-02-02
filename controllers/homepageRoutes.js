@@ -66,7 +66,7 @@ const withAuth = require('../utils/auth');
       res.status(500).json(err);
     }
   });
-  
+  //make a new blog need to be logged in
   router.post('/blog', withAuth, async (req, res) => {
     try {
       const newBlog = await Blog.create({
@@ -79,7 +79,7 @@ const withAuth = require('../utils/auth');
       res.status(400).json(err);
     }
   });
-  
+  //delete blog
   router.delete('/blog/:id', async (req, res) => {
     try {
       const blogData = await Blog.destroy({
@@ -100,26 +100,7 @@ const withAuth = require('../utils/auth');
     }
   });
 
-  // router.post('/comment', async (req, res) => {
-  //   try {
-  //     const dbcommentData = await Comment.create({
-  //       content: req.body.content,
-  //       user_id: session.user_id,
-  //       //blog_id: req.body.blog_id,
-  //     });
-  
-   
-  
-  //       res.status(200).json(dbcommentData);
-      
-  //   } catch (err) {
-  //     console.log(err);
-  //     res.status(500).json(err);
-  //   }
-  // });
-
-  //need to make it to show user posts when logged in.
-  //need to make it to show user posts when logged in.
+ //shows user dashboard if logged in
   router.get('/dashboard', withAuth, (req, res) => {
     console.log(req.session.user_id,"over here")
     Blog.findAll({
@@ -141,7 +122,7 @@ const withAuth = require('../utils/auth');
       });
       
   });
-  
+  //update blog
   router.put('/blog/:id',async (req, res) => {
     try {
       const postData = await Blog.update({ content: req.body.content }, {
@@ -160,21 +141,21 @@ const withAuth = require('../utils/auth');
       res.status(500).json(err);
     }
   });
-
+//get route to newblog form need log in
   router.get('/dashboard/newblog', withAuth, async (req, res) => {
     res.render('newblog', {
       loggedIn: req.session.loggedIn,
     });
   });
-
+//simple routes below to show login page
   router.get('/login', async (req, res) => {
     res.render('login');
   });
-
+//signup page
   router.get('/signup', async (req, res) => {
     res.render('signup');
   });
-
+//logout page redirects to main
   router.get('/logout', async (req, res) => {
     res.redirect('/');
   });

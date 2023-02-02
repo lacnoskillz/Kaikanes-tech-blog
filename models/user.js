@@ -2,12 +2,14 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
+//require bycryp to # user info before saving to database and use in hook
+//check password to see if password entered matches the one in database
 class User extends Model { 
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
   }
 }
-
+//user model
 User.init(
   {
     id: {

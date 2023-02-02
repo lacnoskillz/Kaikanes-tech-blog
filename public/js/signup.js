@@ -1,3 +1,4 @@
+//listener that redirects to login page if you click login btn
 const logininstead = async (event) => {
     event.preventDefault();
 document.location.replace('/login')
@@ -6,6 +7,7 @@ console.log("working");
 }
 document.getElementById('logininstead').addEventListener('click', logininstead);
 
+//signup handler to create new user and password
   const signupFormHandler = async (event) => {
     event.preventDefault();
   

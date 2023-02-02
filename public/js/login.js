@@ -1,4 +1,4 @@
-
+//when click sign up instead redirects to signup page
 const signupinstead = async (event) => {
     event.preventDefault();
 document.location.replace('/signup')
@@ -7,7 +7,7 @@ document.location.replace('/signup')
 document.getElementById('signupinstead').addEventListener('click', signupinstead);
 
 
-
+//login hanlder
 const loginFormHandler = async (event) => {
     event.preventDefault();
     const user_name = document.querySelector('#username-login').value.trim();
