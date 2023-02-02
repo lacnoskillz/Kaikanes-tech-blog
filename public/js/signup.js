@@ -19,7 +19,8 @@ document.getElementById('logininstead').addEventListener('click', logininstead);
       });
   
       if (response.ok) {
-        document.location.replace('/login');
+        document.location.replace('/dashboard');
+        loggedIn = true;
       } else {
         alert('Failed to sign up.');
       }

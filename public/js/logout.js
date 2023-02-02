@@ -12,6 +12,9 @@ const logout = async () => {
       alert(response.statusText);
     }
   };
-  
+  function newblogpage(){
+    document.location.replace('/dashboard/newblog')
+  }
   document.getElementById('logout').addEventListener('click', logout);
 
+  document.getElementById('newblogpagebtn').addEventListener('click', newblogpage);

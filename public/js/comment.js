@@ -1,4 +1,4 @@
-
+// event listener when someone presses submit button for comments
 const commentHandler = async (event) => {
     event.preventDefault();
     const content = document.querySelector('#commentinput').value.trim();

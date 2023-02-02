@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Blog, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
-  
+  // get all route to get all blogs in database
   router.get('/', async (req, res) => {
     try {
       const BlogData = await Blog.findAll({
@@ -19,13 +19,15 @@ const withAuth = require('../utils/auth');
   );
       res.render('all', {
         Blogs,
+        loggedIn: req.session.loggedIn,
       });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
   });
-
+//get route to get a single blog
+// and display more content
   router.get('/blog/:id', async (req, res) => {
     try {
       const dbBlogData = await Blog.findByPk(req.params.id, {
@@ -119,23 +121,44 @@ const withAuth = require('../utils/auth');
   //need to make it to show user posts when logged in.
   //need to make it to show user posts when logged in.
   router.get('/dashboard', withAuth, (req, res) => {
+    console.log(req.session.user_id,"over here")
     Blog.findAll({
       where: {
         user_id: req.session.user_id
-      }
+      },
     })
       .then(dbPostData => {
-        const blog = dbPostData.map((blog) => blog.get({ plain: true }));
-        
-        res.render("dashboard", {
-          blog,
-          loggedIn: req.session.loggedIn,
+        const Blogs = dbPostData.map((blog) => blog.get({ plain: true }));
+        console.log(Blogs,"this one");
+        res.render('dashboard', {
+          Blogs,
+          loggedIn: true
         });
       })
       .catch(err => {
         console.log(err);
         res.redirect("login");
       });
+      
+  });
+  
+  router.put('/blog/:id',async (req, res) => {
+    try {
+      const postData = await Blog.update({ content: req.body.content }, {
+        where: {
+          id: req.params.id,
+        },
+      });
+  
+      if (!postData) {
+        res.status(404).json({ message: 'No post found with this id!' });
+        return;
+      }
+  
+      res.status(200).json(postData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
 
   router.get('/dashboard/newblog', withAuth, async (req, res) => {

@@ -1,12 +1,13 @@
 <div class="row">
   <div class="col-auto">
-    <h2>Welcome, {{session.user_name}}!</h2>
-    {{blog.content}}
+    <h2>Welcome!</h2>
+    
   </div>
 </div>
 Your Posts:<br>
-
-<br><button type="button" class="btn btn-primary" id="newblog">+New Blog</button>
- 
-
+<button type="button" href="./newblog.handlebars" class="btn btn-primary" id="newblogpagebtn">+New Blog</button>
+ {{#each Blogs as |Blog|}}
+{{> dashboard-blogs}}
 <script src="./js/dashboard.js"></script>
+{{/each}}
+

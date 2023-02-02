@@ -1,5 +1,6 @@
 const newBlogHandler = async (event) => {
     event.preventDefault();
+    console.log("wow");
   
     const blogname = document.querySelector('#blogtitle').value.trim();
     const content = document.querySelector('#blogtext').value.trim();
